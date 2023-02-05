@@ -91,5 +91,15 @@ def above5_5(nam):
             else:
                 return False
 print(above5_5(nam))
+#task2
+goodmov=[]
+def gmlist(goodmov):
+    print("")
+    for i in movies:
+        if i["imdb"]>5.5:
+            goodmov.append(i)
+    for i in goodmov:
+        print(i['name'],i['imdb'],i['category'],sep='-')
+gmlist(goodmov)
 
 
