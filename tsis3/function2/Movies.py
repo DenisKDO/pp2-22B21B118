@@ -101,5 +101,14 @@ def gmlist(goodmov):
     for i in goodmov:
         print(i['name'],i['imdb'],i['category'],sep='-')
 gmlist(goodmov)
+#task3
+print()
+categ=input("Choose the category: ")
+def cat(categ):
+    for i in movies:
+        if i['category']==categ:
+            print(i['name'])
+cat(categ)
+
 
 
