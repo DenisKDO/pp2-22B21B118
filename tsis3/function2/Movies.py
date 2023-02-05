@@ -125,6 +125,19 @@ def avimdb(lofmovies):
                 cnt=cnt+j['imdb']
     print(round(cnt/len(lofmovies),2))
 avimdb(lofmovies)
+#task 5
+categ=input("Choose the category and we calculate average IMDB of it: ")
+def avcat(categ):
+    count=0
+    cnt=0
+    for i in movies:
+        if i['category']==categ:
+            count+=i['imdb']
+            cnt+=1
+    print(round(count/cnt,2))
+avcat(categ)
+        
+
 
 
 
