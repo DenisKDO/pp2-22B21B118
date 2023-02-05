@@ -109,6 +109,24 @@ def cat(categ):
         if i['category']==categ:
             print(i['name'])
 cat(categ)
+#task4
+print('\nEnter few movies and we calculate average IMDB of them (if ended ender "ok"): ')
+lofmovies=[]
+for i in range(1000):
+    a=input()
+    if a=='OK' or a=='Ok' or a=='ok':
+        break
+    lofmovies.append(a)
+def avimdb(lofmovies):
+    cnt=0
+    for i in lofmovies:
+        for j in movies:
+            if i==j['name']:
+                cnt=cnt+j['imdb']
+    print(round(cnt/len(lofmovies),2))
+avimdb(lofmovies)
+
+
 
 
 
