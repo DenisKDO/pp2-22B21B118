@@ -2,14 +2,18 @@ class Easy():
     '''output,input string'''
     def __init__(self):
         self.somestring=''
-    def getstring(self):
+    def getString(self):
         self.somestring=input()
-    def printstring(self):
-        print(self.somestring,end=' ')
+    def printString(self):
+        print(self.somestring.upper(), end='')
 
-string=Easy()
-string.getstring()
-string.printstring()
+a=Easy()
+a.getString()
+a.printString()
+
+
+
+        
 
 
         
