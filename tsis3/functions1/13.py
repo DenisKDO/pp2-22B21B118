@@ -19,7 +19,7 @@ def game():
         print()
         if isright(a,rannum)==True:
             break
-    print(f"Good job, KBTU! You guessed my number in {count} guesses!")
+    print(f"Good job, {name}. You guessed my number in {count} guesses!")
 game()
 
 
