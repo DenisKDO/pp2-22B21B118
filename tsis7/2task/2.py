@@ -1,5 +1,4 @@
 import pygame
-import os
 pygame.init()
 screen=pygame.display.set_mode((600,600))
 pygame.display.set_caption('MP3 PLAYER')
@@ -16,31 +15,24 @@ back_arrow_rect=back_arrow.get_rect(topleft=(35,350))
 play_button_rect=list_play_pause[0].get_rect(topleft=(218,347))
 stop_button_rect=list_play_pause[1].get_rect(topleft=(218,347))
 
+mus=[
+pygame.mixer.Sound(r'sounds/hodak.mp3'),
+pygame.mixer.Sound(r'sounds/taetdim.mp3'),
+pygame.mixer.Sound(r'sounds/pride.mp3')
+]
+ch=mus[0].play()
 
-pygame.mixer.music.load(r'sounds/hodak.mp3')
-pygame.mixer.music.play()
+now_mus=0
 
-pause_play=False
+play_pause_count=1
 running=True
+vol=1.0
 while running:
     screen.blit(forward_arrow,(400,350))
     screen.blit(back_arrow,(35,350))
+    screen.blit(list_play_pause[play_pause_count],(218,347))
     mouse=pygame.mouse.get_pos()
-    if pause_play:
-        screen.blit(list_play_pause[0],(218,347))
-        for event in pygame.event.get():
-            if play_button_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
-                pygame.mixer.music.unpause()
-                pause_play=False
-    if not pause_play:
-        screen.blit(list_play_pause[1],(218,347))
-        for event in pygame.event.get():
-            if stop_button_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
-                pygame.mixer.music.pause()
-                pause_play=True
-    if back_arrow_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
-        pygame.mixer.music.rewind()
-
+    
     
 
 
@@ -54,3 +46,46 @@ while running:
         if i.type==pygame.QUIT:
             running=False
             pygame.quit()
+        elif i.type==pygame.KEYDOWN:
+            if i.key==pygame.K_UP:
+                vol+=0.1
+                pygame.mixer.music.set_volume(vol)
+            elif i.key==pygame.K_DOWN:
+                vol-=0.1
+                pygame.mixer.music.set_volume(vol)
+
+        if i.type==pygame.MOUSEBUTTONDOWN:
+            if forward_arrow_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0] and pygame.MOUSEBUTTONUP:
+                if now_mus+1==len(mus):
+                    continue
+                else: 
+                    now_mus+=1  
+                    ch.stop()
+                    ch=mus[now_mus].play()
+                    play_pause_count=1
+            elif back_arrow_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0] and pygame.MOUSEBUTTONUP:
+                if now_mus==0:
+                    continue
+                else:
+                    now_mus-=1
+                    ch.stop()
+                    ch=mus[now_mus].play()
+                    play_pause_count=1
+
+        if play_pause_count==1:
+            if stop_button_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]: 
+                ch.pause()
+                play_pause_count=0
+            elif i.type==pygame.KEYDOWN:
+                if i.key==pygame.K_SPACE:
+                    ch.pause()
+                    play_pause_count=0
+        elif play_pause_count==0:
+            if play_button_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
+                ch.unpause()
+                play_pause_count=1
+            elif i.type==pygame.KEYDOWN:
+                if i.key==pygame.K_SPACE:
+                    ch.unpause()
+                    play_pause_count=1
+        
