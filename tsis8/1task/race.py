@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
         if self.rect.right<500:
             if keyboard[pygame.K_d]:
                 self.rect.move_ip(5,0)
-        if self.rect.left>0:
+        if self.rect.left>10:
             if keyboard[pygame.K_a]:
                 self.rect.move_ip(-5,0)
     def draw(self):
@@ -80,6 +80,7 @@ coin=Coin()
 #CREATING SPRITES GROUP
 enemies=pygame.sprite.Group()
 enemies.add(e1)
+enemies.add(e2)
 all_sprite=pygame.sprite.Group()
 all_sprite.add(e1)
 all_sprite.add(e2)
@@ -118,7 +119,7 @@ while True:
         #INCREASING SPEED
         if event.type==INCSPEED:
             score_amout+=1
-            SPEED+=0.3
+            SPEED+=0.5
             score+=10*score_amout
 
         #EXIT
@@ -129,8 +130,9 @@ while True:
     screen.blit(scores,(15,13))
     coin_score=font_small.render(f'SCORE: {str(coin_amout)}',True,'white')
     screen.blit(coin_score,(370,13))
-    if pygame.sprite.spritecollideany(e2,enemies):
-        e2.rect.center=(random.randint(50,450),0)
+    
+    if e2.rect.colliderect(e1.rect):
+        e1.rect.center=(random.randint(50,450),-300)
 
 
 
